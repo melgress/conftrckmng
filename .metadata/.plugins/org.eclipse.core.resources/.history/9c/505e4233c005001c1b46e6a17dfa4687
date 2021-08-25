@@ -1,0 +1,14 @@
+package main;
+//Hier wird ein Session Objekt erzeugt, welches Talks und Zeiten enthält
+
+public class Session {
+	 
+	Talks events;
+	
+	public Session (Talks events)  {
+		
+		this.events = events;
+		
+	}
+
+}

@@ -1,0 +1,22 @@
+package main;
+import java.io.*;
+//Erzeugt ein Objekt Talk mit Name und Dauer des Talks
+
+public class Talks {
+	
+	String name;
+	String duration;
+
+	public Talks (String name, String duration) {
+		this.name = name;
+		this.duration = duration;
+	}
+	
+	Talks Hello = new Talks ("test", "2");
+	
+	public static void testPrint () {
+		System.out.println(Hello);
+	}
+
+
+}

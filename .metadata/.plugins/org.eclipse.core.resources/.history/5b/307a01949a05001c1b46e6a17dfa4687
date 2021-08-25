@@ -1,0 +1,83 @@
+package main;
+import java.io.*;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Ctm_main {
+
+	public static void main(String[] args) {
+		
+	
+		
+	//	 String str = "Tutorials123";
+	      
+		try {
+
+			BufferedReader in = new BufferedReader(new FileReader("test3"));
+
+			StringBuilder sb = new StringBuilder();
+			
+			String line;
+
+			 while ((line = in.readLine()) != null) {
+				sb.append(line);
+				sb.append("\n");
+				
+
+				//Pattern p1 = Pattern.compile("(\\d+)");
+		        //Matcher m1 = p1.matcher(line);
+		        Pattern p1 = Pattern.compile("(/.+?(?=min)/)");
+		        Matcher m1 = p1.matcher(line);
+		        while(m1.find()) {
+		        	String min = m1.group(1);
+		        	
+		            System.out.println(m1.group());
+		            
+		            
+		        }
+		       /* while(m1.find()) {
+		        	String min = m1.group(1);
+		        	
+		            System.out.println(m1.group());
+		            
+		            
+		        }*/
+		        /*while(m2.find()) {
+	        	String name = m2.group(2);
+	        	System.out.println(name);
+	          //  System.out.println(m.group());
+	            
+	            
+	        }*/
+			 }
+				
+				//System.out.println(line);
+				/*String patternString1 = "(min)";
+		        Pattern pattern = Pattern.compile(patternString1);
+		        Matcher matcher = pattern.matcher(line);
+
+		        while(matcher.find()) {
+		            System.out.println("found: " + matcher.group(1));
+		        }*/
+		    
+			 	
+
+			//String contents = sb.toString();
+			
+			//String[] lines = sb.toString().split("\\n");
+		
+			//System.out.println(contents);
+			//in.close();
+				
+				
+			
+		        
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+	}
+}
+
+
+		    

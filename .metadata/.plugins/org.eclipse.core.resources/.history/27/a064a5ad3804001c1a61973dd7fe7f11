@@ -1,0 +1,6 @@
+package main;
+//Erzeugt ein Objekt Talk mit Name und Dauer des Talks
+
+public class Talks {
+
+}

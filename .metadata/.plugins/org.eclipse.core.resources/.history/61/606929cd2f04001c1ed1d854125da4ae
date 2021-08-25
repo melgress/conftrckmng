@@ -1,0 +1,33 @@
+package main;
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+
+public class Ctm_main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub+
+		System.out.print("Hello World");
+		try {
+			Reader reader =
+				    new BufferedReader(
+				        new FileReader("C:\\Desktop\\confmng\\src\\main\\test"));
+
+				int theCharNum = reader.read();
+				while(theCharNum != -1) {
+				    char theChar = (char) theCharNum;
+
+				    System.out.print(theChar);
+
+				    theCharNum = reader.read();
+				}
+
+		   
+		    } catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+
+	}
+
+}

@@ -1,0 +1,27 @@
+package main;
+//Hier wird ein Session Objekt erzeugt, welches Talks und Zeiten enthält
+
+public class Session {
+	 
+	Talks events;;
+	int startTime;
+	int durationLeft;
+	
+	
+	public Session (Talks talks, int start, int duration)  {
+		this.events = talks;
+		this.startTime = start;
+		this.durationLeft = duration;	
+		
+	}
+	
+	Session morningSession = new Session(events, 9, 180);
+	Session lunch = new Session (events, 12, 60);
+	Session afternoonSession = new Session (events, 13, 300);
+	
+	public void addTalk
+	}
+	
+	
+
+}

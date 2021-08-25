@@ -1,0 +1,46 @@
+package main;
+import java.io.*;
+import java.util.Scanner;
+
+public class Ctm_main {
+
+	public static void main(String[] args) {
+		
+	
+		
+	
+		try {
+
+		
+			BufferedReader bufferedReader =
+				    new BufferedReader(
+				        new FileReader("test3"));
+
+				String line = bufferedReader.readLine();
+				while(line != null) {
+				    System.out.println(line);
+				    line = bufferedReader.readLine();
+				}
+		        
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+
+	
+
+}
+}
+
+/*
+ * // create a reader instance
+		    BufferedReader br = new BufferedReader(new FileReader("test3"));
+
+		    // read until end of file
+		    String letter;
+		    while ((letter = br.readLine()) != null) {
+		        System.out.println(letter);
+		    }
+
+		    // close the reader
+		    br.close();
+		    */

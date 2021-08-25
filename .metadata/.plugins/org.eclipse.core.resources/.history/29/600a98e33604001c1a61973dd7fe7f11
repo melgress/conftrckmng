@@ -1,0 +1,34 @@
+package main;
+import java.io.*;
+
+public class Ctm_main {
+
+	public static void main(String[] args) {
+		System.out.println(new File("").getAbsolutePath());
+
+		// TODO Auto-generated method stub+
+		System.out.print("Hello World");
+		try {
+			Reader reader =
+				    new BufferedReader(
+				        new FileReader("test3.txt"));
+
+				int theCharNum = reader.read();
+				while(theCharNum != -1) {
+				    char theChar = (char) theCharNum;
+
+				    System.out.print(theChar);
+
+				    theCharNum = reader.read();
+
+				}
+		    
+
+		    } catch (IOException e) {
+		    	 System.out.println("An error occurred.");
+				e.printStackTrace();
+			}
+
+	}
+
+}

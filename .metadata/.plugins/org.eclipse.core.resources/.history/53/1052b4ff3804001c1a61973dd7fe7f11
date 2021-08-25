@@ -1,0 +1,13 @@
+package main;
+//Erzeugt ein Objekt Talk mit Name und Dauer des Talks
+
+public class Talks {
+	private String name;
+	private String duration;
+
+	public Talks (name, duration) {
+		this.name = name;
+		this.duration = duration;
+	}
+
+}

@@ -1,0 +1,56 @@
+package main;
+import java.io.*;
+import java.util.Scanner;
+
+public class Ctm_main {
+
+	public static void main(String[] args) {
+		
+	
+		
+	//	 String str = "Tutorials123";
+	      
+		try {
+
+			BufferedReader in = new BufferedReader(new FileReader("test3"));
+
+			StringBuilder sb = new StringBuilder();
+			
+			String line;
+
+			 while ((line = in.readLine()) != null) {
+				sb.append(line);
+				sb.append("\n");
+				//System.out.println(line);
+			}
+
+			String contents = sb.toString();
+			//System.out.println(contents);
+			in.close();
+			
+				String duration = contents.replaceAll("[^0-9] \n");
+				System.out.println(duration);
+			
+		        
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+
+	
+
+}
+}
+
+/*
+ * // create a reader instance
+		    BufferedReader br = new BufferedReader(new FileReader("test3"));
+
+		    // read until end of file
+		    String letter;
+		    while ((letter = br.readLine()) != null) {
+		        System.out.println(letter);
+		    }
+
+		    // close the reader
+		    br.close();
+		    */

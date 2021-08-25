@@ -1,0 +1,71 @@
+package main;
+import java.io.*;
+import java.util.Scanner;
+
+public class Ctm_main {
+
+	public static void main(String[] args) {
+		
+	
+		
+	
+		try {
+
+			
+			 String str = "Tutorials123";
+		      for(int i=0; i < str.length(); i++) {
+		         Boolean flag = Character.isDigit(str.charAt(i));
+		         if(flag) {
+		            System.out.println("'"+ str.charAt(i)+"' is a number");
+		         }
+		         else {
+		            System.out.println("'"+ str.charAt(i)+"' is a letter");
+		         }
+		      }
+			Reader reader =
+				    new BufferedReader(
+				        new FileReader("test3"));
+			
+
+				int theCharNum = reader.read();
+				Boolean isNumber = Character.isDigit(str.charAt(theCharNum));
+				while(theCharNum != -1) {
+					if (isNumber) {
+				    char theChar = (char) theCharNum;
+
+				    System.out.print(theChar);
+					
+					
+				    theCharNum = reader.read();
+				    
+					}
+				    
+					
+					else {
+						System.out.println("min");
+					}
+				}
+		    
+		        
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+
+	
+
+}
+}
+
+/*
+ * // create a reader instance
+		    BufferedReader br = new BufferedReader(new FileReader("test3"));
+
+		    // read until end of file
+		    String letter;
+		    while ((letter = br.readLine()) != null) {
+		        System.out.println(letter);
+		    }
+
+		    // close the reader
+		    br.close();
+		    */
