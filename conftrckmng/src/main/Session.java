@@ -14,6 +14,7 @@ public class Session {
 	int startTime;
 	int timeNeeded;
 	int durationLeft;
+	int duration;
 	//Talks event;
 	
 	
@@ -23,7 +24,7 @@ public class Session {
 		
 		
 	}
-
+	
 	
 	/*Session morningSession = new Session(events, 9, 180);
 	Session lunch = new Session (events, 12, 60);

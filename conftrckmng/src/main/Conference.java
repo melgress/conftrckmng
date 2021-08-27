@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Conference {
 	Talks events;
-	Session session1 = new Session ((List<Talks>) events);
-	Session session2 = new Session ((List<Talks>) events);
+//	Session session1 = new Session ((List<Talks>) events);
+//	Session session2 = new Session ((List<Talks>) events);
 	
-	Tracks tracks = new Tracks(session1, session2);
+//	Tracks tracks = new Tracks(session1, session2);
 	
 	public Conference (Tracks tracks) {
-		this.tracks = tracks;
+//		this.tracks = tracks;
 	}
 
 }

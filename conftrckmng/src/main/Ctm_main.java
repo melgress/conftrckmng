@@ -1,20 +1,39 @@
 package main;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Ctm_main {
-	
-	
-	
+	public static List <Talks> eventList = new ArrayList<Talks>();	;
+	public static Talks event;
+	 public static int id = 0;
+	//public static eventList = new ArrayList<Talks>();	
+//	
+//	public static BufferedReader in;
+//	public static StringBuilder sb = new StringBuilder();
+//    public static int totalMinutes = 0;
+//
+//	
+//	public static String line;
+//	public static String title = null;
+//	public static String time = null;
+////	String timeLightning = null;
+//	//Boolean nextExists = null;
+//	 Session slot = null;
+
 
 	public static void main(String[] args) {
 		
  
 		try {
 
-			BufferedReader in = new BufferedReader(new FileReader("test3"));
+           BufferedReader in = new BufferedReader(new FileReader("test3"));
 
 			StringBuilder sb = new StringBuilder();
 	        int totalMinutes = 0;
@@ -25,7 +44,9 @@ public class Ctm_main {
 			String time = null;
 		//	String timeLightning = null;
 			Boolean nextExists = null;
-			 Session slot = null;
+		 Session slot = null;
+
+		 
 
 
 			
@@ -47,7 +68,8 @@ public class Ctm_main {
 
 		        while(m1.find()) {
 		        	title = m1.group(1);
-		        	nextExists = true;
+		        	id = id+1;
+		        	//nextExists = true;
 		        	
 		        	if (m2.find()) {
 		        		time = m2.group(2);
@@ -64,7 +86,8 @@ public class Ctm_main {
 		        totalMinutes = totalMinutes + timeInt;
 		        //System.out.println(totalMinutes);
 		        String min = "min";
-		        Talks event = new Talks (title, timeInt, min);
+		        event = new Talks (id, title, timeInt, min);
+		        addToSession(event);
 
 		        
 		       
@@ -72,7 +95,9 @@ public class Ctm_main {
 			 }
 			
 			
-			calculateNumberTracks(totalMinutes);
+			//calculateNumberTracks(totalMinutes);
+			// getList();
+			 sortTalks();
 			in.close();
 			
 			
@@ -97,6 +122,31 @@ public class Ctm_main {
 		System.out.println(total);
 		
 	}
+
+	public static void addToSession (Talks events) {
+		eventList.add(events);
+		
+	}
+	
+	public void getList () {
+		String eventListString = null;
+		for(int i = 0; i < id; i++) {
+			 eventListString = eventList.get(i).toString();
+		    System.out.print(eventListString);
+		}
+		
+	}
+	public static void sortTalks () {
+       
+		Collections.sort(eventList);
+
+		   for(Talks t: eventList){
+				System.out.println(t);
+		   }
+	}
+	
+
+	
 }
 
 
