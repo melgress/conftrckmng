@@ -1,6 +1,0 @@
-package main;
-//Hier wird ein Session Objekt erzeugt, welches Talks und Zeiten enthält
-
-public class Session {
-
-}

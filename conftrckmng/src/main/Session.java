@@ -11,55 +11,26 @@ public class Session {
 	 
 	List <Talks> events;
 	Talks event;
-	int startTime;
-	int timeNeeded;
-	int durationLeft;
-	int duration;
-	//Talks event;
-	
-	
-	public Session (List <Talks> events)  {
-		events = new ArrayList<Talks>();
+	int id = 0;
+	String eventListString;
 		
-		
-		
-	}
 	
-	
-	/*Session morningSession = new Session(events, 9, 180);
-	Session lunch = new Session (events, 12, 60);
-	Session afternoonSession = new Session (events, 13, 300);*/
-	
-	public void addTalk (Talks event, Boolean nextExists) {
-
-				events.add(event);
-				//durationLeft = durationLeft-timeNeeded;
-				System.out.println("hinzugefügt");
-				
-			} 
-	
-	/*@Override
-	  public String toString() {
-		String eventsString = events.toString();
-	    return event.name;
-	  }*/
-		
-		public void printList () {
-			System.out.println(events.toString());
+	public Session (List <Talks> eventList)  {
+		//events = new ArrayList<Talks>();
+		for(Talks event: eventList) {
+		    System.out.println(event);  // Will invoke overrided `toString()` method
 		}
+		//System.out.println(events);
+		}
+	
+	
+	
+	    public void doMorning() {
+	    	
+		System.out.println("hi");
+		
 	}
 	
 	
-
-
-
-/*
- * 		durationLeft = 180;
-		timeNeeded = event.getDuration();
-		while (nextExists == true)
-			if (timeNeeded < durationLeft) {
-				//System.out.println(durationLeft);
- */
-
-/*Data objt = new Data(name, address, contact); // Creating a new object
-Contacts.add(objt); // Adding it to the list*/
+}
+	
