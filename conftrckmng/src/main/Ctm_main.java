@@ -152,7 +152,7 @@ public class Ctm_main {
 		            }
 	            	
 	          
-	            }  event.setStartTime(sorted, totalmin);
+	            }  event.setStartTime(sorted, totalmin, count);
 			
 		//	System.out.println("sorted " + sorted);
 			int totalmins = 0;
