@@ -35,9 +35,7 @@ public class Ctm_main {
 			String line;
 			String title = null;
 			String time = null;
-		//	String timeLightning = null;
-			Boolean nextExists = null;
-		 Session slot = null;
+
 
 			 while ((line = in.readLine()) != null) {
 				sb.append(line);
@@ -56,7 +54,6 @@ public class Ctm_main {
 		        while(m1.find()) {
 		        	title = m1.group(1);
 		        	id = id+1;
-		        	//nextExists = true;
 		        	
 		        	if (m2.find()) {
 		        		time = m2.group(2);
@@ -83,15 +80,11 @@ public class Ctm_main {
 			 }
 			
 			
-			//calculateNumberTracks(totalMinutes);
 			// getList();
 			// System.out.println(totalMinutes);
 			 //System.out.println(count);
 			 sortTalks(count, eventList);
-			in.close();
-			
-			
-				
+			in.close();	
 				
 			
 		        
@@ -100,17 +93,6 @@ public class Ctm_main {
 		}
 		
 		
-		
-	}
-	public static void calculateNumberTracks (int totalMinutes) {
-		double availableTrackMins = 480;
-		//int tracksNeeded = 0;
-		double tracksNeeded = totalMinutes/availableTrackMins;
-		int total = (int) Math.ceil((double)tracksNeeded);
-		//System.out.println(totalMinutes);
-		//System.out.println(tracksNeeded);
-		//System.out.println(total);
-		//sortTalks(total);
 		
 	}
 
@@ -131,9 +113,6 @@ public class Ctm_main {
        
 		Collections.sort(eventList);
 		  int  totalmin = 0;
-		 // total = total*2;
-		 // System.out.println(count);
-		  int i = 0;	 
 		   
 			for (Iterator<Talks> iter = eventlist.iterator(); iter.hasNext();) {
 					
@@ -142,113 +121,46 @@ public class Ctm_main {
 	            	if (totalmin < maxs1Mins) {
 		            	talk.setValue(1);
 		            	totalmin = totalmin + talk.getDuration();
-		            	//talk.setStartTime(talk, totalmin);
-		            	//continue;
+
 		            } else if (totalmin >= maxs1Mins && totalmin < maxs1Mins + maxs2Mins) {
 		            	talk.setValue(2);
 		            	totalmin = totalmin + talk.getDuration();
-		            	//talk.setStartTime(talk, totalmin);
-		            	//continue;
+
 		            }
 	            	
 	          
 	            }  event.setStartTime(sorted, totalmin, count);
 			
-		//	System.out.println("sorted " + sorted);
 			int totalmins = 0;
 			List <Talks> s2 = new ArrayList<Talks>();	
 			List <Talks> s1 = new ArrayList<Talks>();
 			for (Iterator<Talks> itera = sorted.iterator(); itera.hasNext();) {
 				
-				//System.out.println("hi2");
 	            Talks talk = itera.next();
 	            
 	            if (totalmins < maxs1Mins) {
 	            	s1.add(talk);
 	            	talk.setValue(1);
 	            	totalmins = totalmins + talk.getDuration();
-	            	//talk.setStartTime(talk, totalmins);
-	            	
-	            //	System.out.println(totalmins);
-	            	//System.out.println(s1);
 	            	continue;
 	            } else if (totalmins >= maxs1Mins && totalmins < maxs1Mins + maxs2Mins) {
 	            	s2.add(talk);
 	            	talk.setValue(2);
 	            	totalmins = totalmins + talk.getDuration();
-	            //	System.out.println(totalmins);
-	            	//System.out.println(s2);
 	            	continue;
 	            }
-	                //totalmins = 0;
-	           
-	            
-	          
-	              //else {
-	        //System.out.println("morning: " + s1);
-	         //System.out.println("afternoon: " + s2);
-			//Session morning = new Session(s1);
-			//Session afternoon = new Session (s2);
+
 	            	  
 			s1.clear();
 			s2.clear();
-		   //Tracks track = new Tracks (morning, afternoon);
 			totalmins = 0;
-			//System.out.println("hier");
 			if (itera.hasNext()) {
 				continue;
 			} 
 			break;
-	        //    }
 			}
 	}
-	public static void addToSession () {
-	
-         
-	}
+
 	
 	
 }
-
-/*   for(Talks t: eventList ){
-			 //  for (int i=0; i<count; i++) {
-
-			   if (totalmin < 180) {
-				   s1.add(t);
-				//String newLine = System.getProperty("line.separator");
-				//System.out.print(morningSession + newLine);
-
-				totalmin = t.getDuration() + totalmin;
-				//System.out.print(totalmin);
-
-				i++;
-			    continue;
-					
-			   } else if (totalmin >= 180 && totalmin <=480) {
-					//System.out.print(totalmin);
-                   
-				   
-				   s2.add(t);
-				   String newLine = System.getProperty("line.separator");
-					//System.out.print(afternoonSession + newLine);
-				 
-				   totalmin = t.getDuration() + totalmin;
-				   i++;
-				   //System.out.println(i);
-				    continue;
-			   }  
-			   
-				   System.out.println("done");
-				   totalmin = 0;
-				  // System.out.println(s1);
-				   Session morningSession = new Session (s1);
-				   Session afternoonSession = new Session (s2);
-				   //Tracks track = new Tracks (morningSession, afternoonSession);
-				  // System.out.println(s2);
-				  
-				  break;
-			  // } 
- * 
- */
-
-		    
