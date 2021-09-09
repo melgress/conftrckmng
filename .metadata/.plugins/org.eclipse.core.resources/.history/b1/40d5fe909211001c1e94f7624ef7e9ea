@@ -190,6 +190,7 @@ public class Talks implements Comparable <Talks> {
 			time =sdf.format(start) + " PM";
 			}
 	   
+		System.out.println(time);
 		session.setTalks(talk);
 		session.setStartTime(time);
 		 count2++;

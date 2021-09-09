@@ -180,16 +180,19 @@ public class Talks implements Comparable <Talks> {
 			lastTimeSave = lastTime;
 			lastTime = totalHours + lastTime;
 		String lastTimeStr = formatter.format(lastTimeSave);
-		//System.out.println(lastTimeSave);
-		start = sdf.parse(lastTimeStr);
-	
+		System.out.println(lastTimeSave);
+		if (lastTimeSave < 12) {
+		start = sdf.parse(lastTimeStr + " AM");
+		}
+		else if (lastTimeSave == 12 || lastTimeSave > 12) {
+			start = sdf.parse(lastTimeStr + " PM");
+			}
+
 		if (lastTimeSave < 12) {
 			 time =sdf.format(start) + " AM";
 			}
-		else if (lastTimeSave == 12 || lastTimeSave > 12) {
-			time =sdf.format(start) + " PM";
-			}
 	   
+		//System.out.println(time);
 		session.setTalks(talk);
 		session.setStartTime(time);
 		 count2++;
@@ -207,7 +210,7 @@ public class Talks implements Comparable <Talks> {
 			int fullMins = lastTimeMins%60;
 		
 			String total = fullHours + ":" + fullMins;
-			//System.out.println(fullHours);
+			System.out.println(fullHours);
 			if (fullHours < 12) {
 				total = fullHours + ":" + fullMins + " AM";
 				} 
@@ -221,6 +224,7 @@ public class Talks implements Comparable <Talks> {
 				time =sdf.format(start) + " PM";
 			} 
 			else if (fullHours > 12) {
+				System.out.println("hier");
 				time =sdf.format(start) + " PM";
 
 			} 

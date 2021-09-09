@@ -180,7 +180,7 @@ public class Talks implements Comparable <Talks> {
 			lastTimeSave = lastTime;
 			lastTime = totalHours + lastTime;
 		String lastTimeStr = formatter.format(lastTimeSave);
-		//System.out.println(lastTimeSave);
+		System.out.println(lastTimeSave);
 		start = sdf.parse(lastTimeStr);
 	
 		if (lastTimeSave < 12) {
@@ -190,6 +190,7 @@ public class Talks implements Comparable <Talks> {
 			time =sdf.format(start) + " PM";
 			}
 	   
+		System.out.println(time);
 		session.setTalks(talk);
 		session.setStartTime(time);
 		 count2++;

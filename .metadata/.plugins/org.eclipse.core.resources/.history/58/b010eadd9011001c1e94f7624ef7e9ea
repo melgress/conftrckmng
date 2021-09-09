@@ -107,13 +107,13 @@ public class Talks implements Comparable <Talks> {
 	    DecimalFormat formatter = new DecimalFormat("00.00", symbols);
 	    //System.out.println(formatter.format(45.45889));
 	    String datumString = "09:00";
-	    DateFormat sdf = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+	    DateFormat sdf = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
 		//SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
-		    Date start = sdf.parse("09:00");
-		    Date startSave = sdf.parse("09:00");
-		    Date NetworkingEvent = sdf.parse("15:30");
-		    Date MidDay = sdf.parse("12:00");
-		    Date lunch = sdf.parse("12:00");
+		    Date start = sdf.parse("09:00 AM");
+		    Date startSave = sdf.parse("09:00 AM");
+		    Date NetworkingEvent = sdf.parse("15:30 PM");
+		    Date MidDay = sdf.parse("12:00 PM");
+		    Date lunch = sdf.parse("12:00 PM");
 		   String time=sdf.format(start);
             
 		    double lastTime = 9;
@@ -180,16 +180,16 @@ public class Talks implements Comparable <Talks> {
 			lastTimeSave = lastTime;
 			lastTime = totalHours + lastTime;
 		String lastTimeStr = formatter.format(lastTimeSave);
-		//System.out.println(lastTimeSave);
-		start = sdf.parse(lastTimeStr);
-	
+		System.out.println(lastTimeSave);
 		if (lastTimeSave < 12) {
-			 time =sdf.format(start) + " AM";
-			}
+		start = sdf.parse(lastTimeStr + " AM");
+		}
 		else if (lastTimeSave == 12 || lastTimeSave > 12) {
-			time =sdf.format(start) + " PM";
+			start = sdf.parse(lastTimeStr + " PM");
 			}
-	   
+
+	    time =sdf.format(start);
+		//System.out.println(time);
 		session.setTalks(talk);
 		session.setStartTime(time);
 		 count2++;
@@ -207,24 +207,19 @@ public class Talks implements Comparable <Talks> {
 			int fullMins = lastTimeMins%60;
 		
 			String total = fullHours + ":" + fullMins;
-			//System.out.println(fullHours);
-			if (fullHours < 12) {
+			System.out.println(lastTimeSave);
+			if (lastTimeSave < 12) {
 				total = fullHours + ":" + fullMins + " AM";
 				} 
-			
+			else if (lastTimeSave == 12) {
+				total = fullHours + ":" + fullMins + " PM";
+			} 
+			else if (lastTimeSave > 12) {
+				total = fullHours + ":" + fullMins + " PM";
+			} 
 			
 			start = sdf.parse(total);
-			if (fullHours < 12) {
-				time =sdf.format(start) + " AM";
-				} 
-			else if (fullHours == 12) {
-				time =sdf.format(start) + " PM";
-			} 
-			else if (fullHours > 12) {
-				time =sdf.format(start) + " PM";
-
-			} 
-			
+			time =sdf.format(start);
 			lastTime = lastTime + totalHours;
 			session.setTalks(talk);
 			session.setStartTime(time);
