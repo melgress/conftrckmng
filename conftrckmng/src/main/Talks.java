@@ -1,5 +1,6 @@
 package main;
 import java.io.*;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -26,6 +27,8 @@ public class Talks implements Comparable <Talks> {
 	boolean isNetworkingEvent;
 	boolean NEsetted;
 	Talks talk;
+	double lastTimeSave = 0;
+	int talkMins = 0;
 
 
 
@@ -94,30 +97,35 @@ public class Talks implements Comparable <Talks> {
         return compareDur-this.duration;
     }
 	
+	
 	public void setStartTime (List<Talks> sorted , double totalmins, int count) throws ParseException {
 		int lastTimeMinutes = 0;
 		int minutes = 0;
 		int totalmin = 0;
-	    DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+	    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 	    symbols.setDecimalSeparator(':');
 	    DecimalFormat formatter = new DecimalFormat("00.00", symbols);
 	    //System.out.println(formatter.format(45.45889));
 	    String datumString = "09:00";
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-		    Date start = sdf.parse("09:00");
-		    Date startSave = sdf.parse("09:00");
-		    Date NetworkingEvent = sdf.parse("16:00");
+	    DateFormat sdf = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+		//SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+		    Date start = sdf.parse("09:00 AM");
+		    Date startSave = sdf.parse("09:00 AM");
+		    Date NetworkingEvent = sdf.parse("15:30 PM");
+		    Date MidDay = sdf.parse("12:00 PM");
+		    Date lunch = sdf.parse("12:00 PM");
 		   String time=sdf.format(start);
             
 		    double lastTime = 9;
 			String startTime = null;
 			Talks talk = null;
 			 Session session = new Session (startTime, talk);
-			 int count2 = -1;
+			 int count2 = 1;
 			 Iterator<Talks> iter = sorted.iterator();
-		for (int i = -2; i<count; i++) {
+		for (int i = 0; i<count; i++) {
 			//System.out.println(start);
-		
+			
+	
 			if (start.after(NetworkingEvent) || count == count2) {
 				talk = new Talks (100, "Networking Event", 60, "min");
 				String startNE = "17:00";
@@ -128,24 +136,17 @@ public class Talks implements Comparable <Talks> {
 				lastTime = 9;
 				if (iter.hasNext()) {
 				talk =  iter.next();
-				lastTime = (lastTime*60 - talk.getDuration())/60;
+				//lastTime = (lastTime*60 - talk.getDuration())/60;
 				System.out.println(lastTime);
 				} else if (!iter.hasNext()) {
 					break;
 				}
 				
 			}
-
-			else if (isLunch == true) {
-			 talk = new Talks (99, "lunch", 60, "min");
-			 //count2++;
-			 setIsLunch(false);
-			}
-			
-			 
-			else {
+					
 	          talk = iter.next();
-			}
+	          
+			
             totalmin = totalmin + talk.getDuration();
            
 
@@ -160,8 +161,12 @@ public class Talks implements Comparable <Talks> {
 	   
 	    double talkDu = talk.getDuration();
 		double totalHours = talkDu/60;
-		 if (totalmin == 180) {
-		    	setIsLunch(true);		
+		//System.out.println(time + " " + lastTime);
+		 if (lastTime == 12.0 ) {
+		    	setIsLunch(true);	
+		    	talk = new Talks (99, "lunch", 60, "min");
+				 //count2++;
+				 setIsLunch(false);
 		    	
 		    }
 		 
@@ -170,13 +175,19 @@ public class Talks implements Comparable <Talks> {
 		//System.out.println(time + " " + talk)
 		if (talk.getDuration() >= 60) {
 			
-			double lastTimeSave = lastTime;
+			talkMins = talk.getDuration();
+			//System.out.println(talkMins);
+			lastTimeSave = lastTime;
 			lastTime = totalHours + lastTime;
 		String lastTimeStr = formatter.format(lastTimeSave);
-		
-		startSave = start;
-		start = sdf.parse(lastTimeStr);
-		time =sdf.format(start);
+		//System.out.println(lastTime);
+		if (lastTimeSave < 12) {
+		start = sdf.parse(lastTimeStr + " AM");
+		}
+		else if (lastTime >= 12) {
+			start = sdf.parse(lastTimeStr + " PM");
+			}
+	    time =sdf.format(start);
 		//System.out.println(time);
 		session.setTalks(talk);
 		session.setStartTime(time);
@@ -186,22 +197,24 @@ public class Talks implements Comparable <Talks> {
 		
 		} 
 		else if (talk.getDuration() < 60) {
-			//System.out.println(lastTime);
 			
-			double lastTimeSave = lastTime;
-			lastTime = lastTimeSave;
-			lastTime = lastTime + totalHours;
+//			double lastTimeSave = lastTime;
+//			lastTime = lastTime - (talkMins/60);
+//			lastTime = lastTime + totalHours;
 			int lastTimeMins = (int) (lastTime*60);
 			int fullHours = lastTimeMins/60;
 			int fullMins = lastTimeMins%60;
 		
 			String total = fullHours + ":" + fullMins;
+			if (lastTimeSave < 12) {
+				total = fullHours + ":" + fullMins + " AM";
+			} else if (lastTimeSave >=12) {
+				total = fullHours + ":" + fullMins + " PM";
+			}
 			
-			startSave = start;
 			start = sdf.parse(total);
-			//System.out.println(start);
 			time =sdf.format(start);
-			
+			lastTime = lastTime + totalHours;
 			session.setTalks(talk);
 			session.setStartTime(time);
 			count2++;
