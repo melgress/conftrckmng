@@ -1,11 +1,6 @@
 package main;
-//Hier wird ein Session Objekt erzeugt, welches Talks und Zeiten enthält
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.event.ListSelectionEvent;
+import java.util.*;
 
 public class Session {
 	 
@@ -15,16 +10,18 @@ public class Session {
 	int id = 0;
 	String eventListString;
 	String startTime;
+	String title;
 		
 	
 	public Session (String startTime, Talks talks)  {
 		this.talks = talks;
 		this.startTime = startTime;
-		//events = new ArrayList<Talks>();
-		/*for(Talks event: eventList) {
-		    System.out.println(event);  // Will invoke overrided `toString()` method
-		}	*/
-		//System.out.println(startTime + ": "+ talks);
+		
+		}
+	public Session (String startTime, String title)  {
+		this.title = title;
+		this.startTime = startTime;
+		
 	
 		}
 	
@@ -41,6 +38,11 @@ public class Session {
 	public void setTalks( Talks talk ) {
 		      talks = talk;
 		   }
+	
+	public void setTalkName( String name ) {
+	      title = name;
+	   }
+	
 	public String getstartTime() {
 			//	System.out.println("Name :" + name );
 			      return startTime;

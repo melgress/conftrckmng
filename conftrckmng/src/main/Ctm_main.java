@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 
 public class Ctm_main {
 	public static List <Talks> eventList = new ArrayList<Talks>();	
-//	public static List <Talks> s2 = new ArrayList<Talks>();	
-//	public static List <Talks> s1 = new ArrayList<Talks>();	
 	public static List <Talks> sorted = new ArrayList<Talks>();	
 	public static Talks event;
 	 public static int id = 0;
@@ -53,7 +51,6 @@ public class Ctm_main {
 
 		        while(m1.find()) {
 		        	title = m1.group(1);
-		        	id = id+1;
 		        	
 		        	if (m2.find()) {
 		        		time = m2.group(2);
@@ -70,7 +67,7 @@ public class Ctm_main {
 		        totalMinutes = totalMinutes + timeInt;
 		        //System.out.println(totalMinutes);
 		        String min = "min";
-		        event = new Talks (id, title, timeInt, min);
+		        event = new Talks (title, timeInt, min);
 		        addToList(event);
 		        count++;
 
@@ -79,10 +76,6 @@ public class Ctm_main {
 		      	
 			 }
 			
-			
-			// getList();
-			// System.out.println(totalMinutes);
-			 //System.out.println(count);
 			 sortTalks(count, eventList);
 			in.close();	
 				
@@ -131,34 +124,6 @@ public class Ctm_main {
 	          
 	            }  event.setStartTime(sorted, totalmin, count);
 			
-			int totalmins = 0;
-			List <Talks> s2 = new ArrayList<Talks>();	
-			List <Talks> s1 = new ArrayList<Talks>();
-			for (Iterator<Talks> itera = sorted.iterator(); itera.hasNext();) {
-				
-	            Talks talk = itera.next();
-	            
-	            if (totalmins < maxs1Mins) {
-	            	s1.add(talk);
-	            	talk.setValue(1);
-	            	totalmins = totalmins + talk.getDuration();
-	            	continue;
-	            } else if (totalmins >= maxs1Mins && totalmins < maxs1Mins + maxs2Mins) {
-	            	s2.add(talk);
-	            	talk.setValue(2);
-	            	totalmins = totalmins + talk.getDuration();
-	            	continue;
-	            }
-
-	            	  
-			s1.clear();
-			s2.clear();
-			totalmins = 0;
-			if (itera.hasNext()) {
-				continue;
-			} 
-			break;
-			}
 	}
 
 	

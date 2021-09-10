@@ -1,0 +1,17 @@
+package main;
+//Hier wird ein Track Objekt erzeugt, welches aus zwei Sessions besteht
+
+import java.util.List;
+
+public class Tracks {
+
+	Session session;
+	
+
+	public Tracks (Session session) {
+		this.session = session;
+		System.out.println("Track erstellt");
+		
+	}
+
+}

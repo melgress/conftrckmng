@@ -1,0 +1,16 @@
+package main;
+
+
+public class Tracks {
+
+	Session session;
+	int countTracks;
+	
+
+	public Tracks (Session session) {
+		this.session = session;
+		System.out.println("Track erstellt");
+		
+	}
+
+}

@@ -1,0 +1,14 @@
+package main;
+
+import java.util.List;
+
+
+public class Conference {
+	Talks events;
+
+	
+	public Conference (Tracks tracks) {
+//		this.tracks = tracks;
+	}
+
+}

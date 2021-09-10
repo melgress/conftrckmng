@@ -1,19 +1,7 @@
 package main;
-import java.io.*;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-//Erzeugt ein Objekt Talk mit Name und Dauer des Talks
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Locale;
+import java.text.*;
+import java.util.*;
+
 
 public class Talks implements Comparable <Talks> {
 	
@@ -21,7 +9,6 @@ public class Talks implements Comparable <Talks> {
 	String name;
 	int duration;
 	String durationUnit;
-	int id;
 	int value; //1 = s1, 2 = s2
 	boolean isLunch;
 	boolean isNetworkingEvent;
@@ -32,8 +19,7 @@ public class Talks implements Comparable <Talks> {
 
 
 
-	public Talks (int id,String name, int duration, String durationUnit) {
-		this.id = id;
+	public Talks (String name, int duration, String durationUnit) {
 		this.name = name;
 		this.duration = duration;
 		this.durationUnit = durationUnit;
@@ -43,7 +29,7 @@ public class Talks implements Comparable <Talks> {
 	
 	@Override 
 	public String toString () {
-		return id + name + duration + durationUnit;
+		return  name + duration + durationUnit;
 	}
 	
     public boolean isLunch() {
@@ -99,20 +85,16 @@ public class Talks implements Comparable <Talks> {
 	
 	
 	public void setStartTime (List<Talks> sorted , double totalmins, int count) throws ParseException {
-		int lastTimeMinutes = 0;
-		int minutes = 0;
+		int countTracks = 1;
 		int totalmin = 0;
 	    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 	    symbols.setDecimalSeparator(':');
 	    DecimalFormat formatter = new DecimalFormat("00.00", symbols);
 	    //System.out.println(formatter.format(45.45889));
-	    String datumString = "09:00";
 	    DateFormat sdf = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
 		//SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
 		    Date start = sdf.parse("09:00");
-		    Date startSave = sdf.parse("09:00");
 		    Date NetworkingEvent = sdf.parse("15:30");
-		    Date MidDay = sdf.parse("12:00");
 		    Date lunch = sdf.parse("12:00");
 		   String time=sdf.format(start);
             
@@ -122,22 +104,23 @@ public class Talks implements Comparable <Talks> {
 			 Session session = new Session (startTime, talk);
 			 int count2 = 1;
 			 Iterator<Talks> iter = sorted.iterator();
+			 
 		for (int i = 0; i<count; i++) {
 			//System.out.println(start);
 			
 	
 			if (start.after(NetworkingEvent) || count == count2) {
-				talk = new Talks (100, "Networking Event", 60, "min");
-				String startNE = "17:00";
+				talk = new Talks (" Networking Event ", 60, "min");
+				String startNE = "05:00PM";
 				session.setTalks(talk);
 				session.setStartTime(startNE);
 				System.out.println(session.toString());
+				System.out.println("");
+				countTracks++;
 				Tracks track = new Tracks (session);
 				lastTime = 9;
 				if (iter.hasNext()) {
 				talk =  iter.next();
-				//lastTime = (lastTime*60 - talk.getDuration())/60;
-				System.out.println(lastTime);
 				} else if (!iter.hasNext()) {
 					break;
 				}
@@ -150,44 +133,31 @@ public class Talks implements Comparable <Talks> {
             totalmin = totalmin + talk.getDuration();
            
 
-            //System.out.println(time + " " + talk);
-            //System.out.println("hier");
-            
-		//Integer.toString(123)
-		String AM = "AM";
-		String PM = "PM";
-	    
-	    //System.out.println(totalmin);
 	   
 	    double talkDu = talk.getDuration();
 		double totalHours = talkDu/60;
-		//System.out.println(time + " " + lastTime);
 		 if (lastTime == 12.0 ) {
 		    	setIsLunch(true);	
-		    	talk = new Talks (99, "lunch", 60, "min");
+		    	talk = new Talks ("lunch ", 60, "min");
 				 //count2++;
 				 setIsLunch(false);
 		    	
 		    }
 		 
-		//System.out.println(totalmin);
-		
-		//System.out.println(time + " " + talk)
+
 		if (talk.getDuration() >= 60) {
 			
 			talkMins = talk.getDuration();
-			//System.out.println(talkMins);
 			lastTimeSave = lastTime;
 			lastTime = totalHours + lastTime;
 		String lastTimeStr = formatter.format(lastTimeSave);
-		//System.out.println(lastTimeSave);
 		start = sdf.parse(lastTimeStr);
 	
 		if (lastTimeSave < 12) {
-			 time =sdf.format(start) + " AM";
+			 time =sdf.format(start) + "AM ";
 			}
 		else if (lastTimeSave == 12 || lastTimeSave > 12) {
-			time =sdf.format(start) + " PM";
+			time =sdf.format(start) + "PM ";
 			}
 	   
 		session.setTalks(talk);
@@ -198,30 +168,26 @@ public class Talks implements Comparable <Talks> {
 		
 		} 
 		else if (talk.getDuration() < 60) {
-			
-//			double lastTimeSave = lastTime;
-//			lastTime = lastTime - (talkMins/60);
-//			lastTime = lastTime + totalHours;
+
 			int lastTimeMins = (int) (lastTime*60);
 			int fullHours = lastTimeMins/60;
 			int fullMins = lastTimeMins%60;
 		
 			String total = fullHours + ":" + fullMins;
-			//System.out.println(fullHours);
 			if (fullHours < 12) {
-				total = fullHours + ":" + fullMins + " AM";
+				total = fullHours + ":" + fullMins + "AM ";
 				} 
 			
 			
 			start = sdf.parse(total);
 			if (fullHours < 12) {
-				time =sdf.format(start) + " AM";
+				time =sdf.format(start) + "AM ";
 				} 
 			else if (fullHours == 12) {
-				time =sdf.format(start) + " PM";
+				time =sdf.format(start) + "PM ";
 			} 
 			else if (fullHours > 12) {
-				time =sdf.format(start) + " PM";
+				time =sdf.format(start) + "PM ";
 
 			} 
 			
@@ -232,8 +198,11 @@ public class Talks implements Comparable <Talks> {
 
 		
 		}
-		
-		//System.out.println("hier");
+		if (time.equals("09:00AM ")) {
+			System.out.println("Track " + countTracks + ":");
+			System.out.println(session.toString());
+			continue;
+		}
 		System.out.println(session.toString());
 		}
 
