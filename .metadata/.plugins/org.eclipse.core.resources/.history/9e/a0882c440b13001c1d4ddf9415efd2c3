@@ -1,0 +1,242 @@
+package main;
+import java.text.*;
+import java.util.*;
+
+
+public class Talks implements Comparable <Talks> {
+	
+	String startTime;
+	String name;
+	int duration;
+	String durationUnit;
+	int value; //1 = s1, 2 = s2
+	boolean isLunch;
+	boolean isNetworkingEvent;
+	//boolean NEsetted;
+	Talks talk;
+	double lastTimeSave = 0;
+	int talkMins = 0;
+
+
+
+	public Talks (String name, int duration, String durationUnit) {
+		this.name = name;
+		this.duration = duration;
+		this.durationUnit = durationUnit;
+		//System.out.println(id + " Name: " + name + "Duration: " + duration + " DurationUnit: " + durationUnit);
+			}
+	
+	
+	@Override 
+	public String toString () {
+		return  name + duration + durationUnit;
+	}
+	
+    public boolean isLunch() {
+	        return isLunch;
+	    }
+	 public void setIsLunch (boolean isLunch) {
+	        this.isLunch = isLunch;
+	    }
+	 
+	 public boolean isNE() {
+	        return isNetworkingEvent;
+	    }
+	 public void setIsNE (boolean isNE) {
+	        this.isNetworkingEvent= isNE;
+	    }
+	 
+	
+	public String getName() {
+	//	System.out.println("Name :" + name );
+	      return name;
+	}
+	
+	public void setName( String title ) {
+	      name = title;
+	   }
+	
+	public int getValue() {
+		System.out.println("value :" + value );
+	      return value;
+	}
+	
+	public void setValue( int v ) {
+	      value = v;
+	   }
+	
+	public int getDuration() {
+		//System.out.println(duration );
+	      return duration;
+	}
+	
+	public void setDuration( int time ) {
+	      duration = time;
+	   }
+	
+	public String getDurationUnit() {
+		System.out.println("Unit :" + name );
+	      return durationUnit;
+	}
+	
+	public void setDurationUnit( String unit ) {
+	      durationUnit = unit;
+	   }
+
+	@Override
+    public int compareTo(Talks comparestu) {
+        int compareDur=((Talks)comparestu).getDuration();
+       
+        return compareDur-this.duration;
+    }
+	
+	
+	public void setStartTime (List<Talks> sorted , double totalmins, int count) throws ParseException {
+		int countTracks = 1;
+		int totalmin = 0;
+	    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+	    symbols.setDecimalSeparator('.');
+	    
+	    String dateString3 = "22.30";
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("HH.mm");
+    	Date date3 = sdf1.parse(dateString3);
+    	SimpleDateFormat sdf2 = new SimpleDateFormat("hh.mm aa");
+    	//formatting the given time to new format with AM/PM
+    	System.out.println("Given time in AM/PM: "+sdf2.format(date3));
+    	
+	    DecimalFormat formatter = new DecimalFormat("00.00", symbols);
+	    //System.out.println(formatter.format(45.45889));
+	    DateFormat sdf = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+		//SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+		    Date start = sdf1.parse("09.00");
+		    Date NetworkingEvent = sdf1.parse("15.00");
+		    Date lunch = sdf1.parse("12.00");
+		   String time=sdf.format(start);
+            
+		    double lastTime = 9;
+			String startTime = null;
+			Talks talk = null;
+			 Session session = new Session (startTime, talk);
+			 int count2 = 1;
+			 ListIterator<Talks> iter = sorted.listIterator();
+			 String lastTimeStr = null;
+			 
+		for (int i = -1; i<count; i++) {
+
+			Talks talkSave = talk;
+			//Date startSave = start;
+			//System.out.println(startSave );
+			System.out.println(start );
+
+	
+		
+			
+	          talk = iter.next();
+	          //System.out.println(talk);
+	          
+			
+            totalmin = totalmin + talk.getDuration();
+           
+
+	   
+	    double talkDu = talk.getDuration();
+		double totalHours = talkDu/60;
+		
+		 
+
+		if (talk.getDuration() >= 60) {
+			
+			talkMins = talk.getDuration();
+			lastTimeSave = lastTime;			
+
+			///System.out.println(lastTimeSave);
+		    lastTimeStr = formatter.format(lastTimeSave);
+		   
+			//String lastTimeSaveStr = String.valueOf(lastTimeSave);
+		   start = sdf1.parse(lastTimeStr);
+		   //System.out.println(start);
+			lastTimeStr = sdf2.format(start);
+			 time =sdf2.format(start);
+			// System.out.println(start + " " + startSave);
+			if (start.after(lunch) && isLunch == false || start.equals(lunch) && isLunch == false) {
+
+				 Talks lunchTime = new Talks (" lunch ", 60, "min");
+				 time =sdf2.format(start);
+				 //talk = talkSave;
+				 session.setTalks(lunchTime);
+				 session.setStartTime(time);
+				 //System.out.println(iter.next());
+				 setIsLunch(true);	
+				 talk = iter.previous();
+			 }
+			else if (start.after(NetworkingEvent) && isNetworkingEvent == false ) {
+				talk = new Talks (" Networking Event ", 60, "min");
+				String startNE = "05:00 PM";
+				 session.setTalks(talk);
+				 session.setStartTime(time);
+				 //System.out.println(iter.next());
+				 setIsLunch(true);	
+				 talk = iter.previous();
+				String startNE = "05:00PM";
+				session.setTalks(talk);
+				session.setStartTime(startNE);
+				System.out.println(session.toString());
+				System.out.println("");
+				countTracks++;
+				Tracks track = new Tracks (session);
+				lastTime = 9;
+				setIsLunch(false);
+				//setIsNE(true);
+				if (iter.hasNext()) {
+				talk =  iter.previous();
+				} else if (!iter.hasNext()) {
+					break;
+				}
+				
+			}
+
+			else {
+		session.setTalks(talk);
+		session.setStartTime(time);
+			}
+			
+		lastTime = totalHours + lastTime;
+		
+		 count2++;
+		
+
+		
+		} 
+		else if (talk.getDuration() < 60) {
+			
+			String total = null;
+			int lastTimeMins = (int) (lastTime*60);
+			int fullHours = lastTimeMins/60;
+			int fullMins = lastTimeMins%60;
+			
+		//	System.out.println(fullMins);
+			if (fullMins == 0) {
+				total = fullHours + "." + fullMins + fullMins;
+			} else {
+				total = fullHours + "." + fullMins;
+			}
+			
+			start = sdf1.parse(total);
+			//System.out.println(start);
+			
+			time =sdf2.format(start);
+				
+			lastTime = lastTime + totalHours;
+			session.setTalks(talk);
+			session.setStartTime(time);
+			count2++;
+			
+			
+		
+		}
+
+		System.out.println(session.toString());
+		}
+
+	}
+}

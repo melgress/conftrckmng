@@ -12,7 +12,7 @@ public class Talks implements Comparable <Talks> {
 	int value; //1 = s1, 2 = s2
 	boolean isLunch;
 	boolean isNetworkingEvent;
-	boolean NEsetted;
+	//boolean NEsetted;
 	Talks talk;
 	double lastTimeSave = 0;
 	int talkMins = 0;
@@ -37,6 +37,13 @@ public class Talks implements Comparable <Talks> {
 	    }
 	 public void setIsLunch (boolean isLunch) {
 	        this.isLunch = isLunch;
+	    }
+	 
+	 public boolean isNE() {
+	        return isNetworkingEvent;
+	    }
+	 public void setIsNE (boolean isNE) {
+	        this.isNetworkingEvent= isNE;
 	    }
 	 
 	
@@ -88,14 +95,22 @@ public class Talks implements Comparable <Talks> {
 		int countTracks = 1;
 		int totalmin = 0;
 	    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-	    symbols.setDecimalSeparator(':');
+	    symbols.setDecimalSeparator('.');
+	    
+	    String dateString3 = "22.30";
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("HH.mm");
+    	Date date3 = sdf1.parse(dateString3);
+    	SimpleDateFormat sdf2 = new SimpleDateFormat("hh.mm aa");
+    	//formatting the given time to new format with AM/PM
+    	System.out.println("Given time in AM/PM: "+sdf2.format(date3));
+    	
 	    DecimalFormat formatter = new DecimalFormat("00.00", symbols);
 	    //System.out.println(formatter.format(45.45889));
 	    DateFormat sdf = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
 		//SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
-		    Date start = sdf.parse("09:00");
-		    Date NetworkingEvent = sdf.parse("15:30");
-		    Date lunch = sdf.parse("12:00");
+		    Date start = sdf1.parse("09.00");
+		    Date NetworkingEvent = sdf1.parse("16.00");
+		    Date lunch = sdf1.parse("12.00");
 		   String time=sdf.format(start);
             
 		    double lastTime = 9;
@@ -103,31 +118,19 @@ public class Talks implements Comparable <Talks> {
 			Talks talk = null;
 			 Session session = new Session (startTime, talk);
 			 int count2 = 1;
-			 Iterator<Talks> iter = sorted.iterator();
+			 ListIterator<Talks> iter = sorted.listIterator();
+			 String lastTimeStr = null;
 			 
 		for (int i = 0; i<count; i++) {
-			//System.out.println(start);
-			
-	
-			if (start.after(NetworkingEvent) || count == count2) {
-				talk = new Talks (" Networking Event ", 60, "min");
-				String startNE = "05:00PM";
-				session.setTalks(talk);
-				session.setStartTime(startNE);
-				System.out.println(session.toString());
-				System.out.println("");
-				countTracks++;
-				Tracks track = new Tracks (session);
-				lastTime = 9;
-				if (iter.hasNext()) {
-				talk =  iter.next();
-				} else if (!iter.hasNext()) {
-					break;
-				}
-				
-			}
-					
+
+		
+		
+			if (iter.hasNext()) {
 	          talk = iter.next();
+			} else {
+				setIsNE(true);
+			}
+	          //System.out.println(talk);
 	          
 			
             totalmin = totalmin + talk.getDuration();
@@ -136,73 +139,131 @@ public class Talks implements Comparable <Talks> {
 	   
 	    double talkDu = talk.getDuration();
 		double totalHours = talkDu/60;
-		 if (lastTime == 12.0 ) {
-		    	setIsLunch(true);	
-		    	talk = new Talks ("lunch ", 60, "min");
-				 //count2++;
-				 setIsLunch(false);
-		    	
-		    }
+		
 		 
 
 		if (talk.getDuration() >= 60) {
 			
 			talkMins = talk.getDuration();
-			lastTimeSave = lastTime;
-			lastTime = totalHours + lastTime;
-		String lastTimeStr = formatter.format(lastTimeSave);
-		start = sdf.parse(lastTimeStr);
-	
-		if (lastTimeSave < 12) {
-			 time =sdf.format(start) + "AM ";
+			lastTimeSave = lastTime;			
+
+			///System.out.println(lastTimeSave);
+		    lastTimeStr = formatter.format(lastTimeSave);
+		   
+			//String lastTimeSaveStr = String.valueOf(lastTimeSave);
+		   start = sdf1.parse(lastTimeStr);
+		   //System.out.println(start);
+			lastTimeStr = sdf2.format(start);
+			 time =sdf2.format(start);
+			// System.out.println(start + " " + startSave);
+			if (start.after(lunch) && isLunch == false || start.equals(lunch) && isLunch == false) {
+
+				 Talks lunchTime = new Talks (" lunch ", 60, "min");
+				 time =sdf2.format(start);
+				 //talk = talkSave;
+				 session.setTalks(lunchTime);
+				 session.setStartTime(time);
+				 //System.out.println(iter.next());
+				 setIsLunch(true);	
+				 count++;
+				 talk = iter.previous();
+			 }
+			else if (start.after(NetworkingEvent) || isNetworkingEvent == true) {
+				Talks NEtalk = new Talks (" Networking Event ", 60, "min");
+				String startNE = "05:00 PM";
+				 session.setTalks(NEtalk);
+				 session.setStartTime(startNE);
+				System.out.println(session.toString());
+				System.out.println("");
+				countTracks++;
+				Tracks track = new Tracks (session);
+				lastTime = 9;
+				setIsLunch(false);
+				setIsNE(false);
+				count++;
+				if (iter.hasNext()) {
+				talk =  iter.previous();
+				} else if (!iter.hasNext()) {
+					break;
+				}
+				
 			}
-		else if (lastTimeSave == 12 || lastTimeSave > 12) {
-			time =sdf.format(start) + "PM ";
-			}
-	   
+
+			else {
 		session.setTalks(talk);
 		session.setStartTime(time);
+			}
+			
+		lastTime = totalHours + lastTime;
+		
 		 count2++;
 		
 
 		
 		} 
 		else if (talk.getDuration() < 60) {
-
+			
+			String total = null;
 			int lastTimeMins = (int) (lastTime*60);
 			int fullHours = lastTimeMins/60;
 			int fullMins = lastTimeMins%60;
-		
-			String total = fullHours + ":" + fullMins;
-			if (fullHours < 12) {
-				total = fullHours + ":" + fullMins + "AM ";
-				} 
 			
+		//	System.out.println(fullMins);
+			if (fullMins == 0) {
+				total = fullHours + "." + fullMins + fullMins;
+			} else {
+				total = fullHours + "." + fullMins;
+			}
 			
-			start = sdf.parse(total);
-			if (fullHours < 12) {
-				time =sdf.format(start) + "AM ";
-				} 
-			else if (fullHours == 12) {
-				time =sdf.format(start) + "PM ";
-			} 
-			else if (fullHours > 12) {
-				time =sdf.format(start) + "PM ";
+			start = sdf1.parse(total);
+			
+			time =sdf2.format(start);
+			if (start.after(lunch) && isLunch == false || start.equals(lunch) && isLunch == false) {
 
-			} 
+				 Talks lunchTime = new Talks (" lunch ", 60, "min");
+				 time =sdf2.format(start);
+				 //talk = talkSave;
+				 session.setTalks(lunchTime);
+				 session.setStartTime(time);
+				 //System.out.println(iter.next());
+				 setIsLunch(true);	
+				 talk = iter.previous();
+				 count++;
+			 }
 			
-			lastTime = lastTime + totalHours;
+			else if (start.after(NetworkingEvent) ) {
+				Talks NEtalk = new Talks (" Networking Event ", 60, "min");
+				String startNE = "05:00 PM";
+				 session.setTalks(NEtalk);
+				 session.setStartTime(startNE);
+				System.out.println(session.toString());
+				System.out.println("");
+				countTracks++;
+				Tracks track = new Tracks (session);
+				lastTime = 9;
+				setIsLunch(false);
+				count++;
+				if (iter.hasNext()) {
+				talk =  iter.previous();
+				continue;
+				}// else if (!iter.hasNext()) {
+					//break;
+				//}
+				
+			}
+			else {
 			session.setTalks(talk);
 			session.setStartTime(time);
+			}
+			
+			lastTime = lastTime + totalHours;
+ 
 			count2++;
-
+			
+			
 		
 		}
-		if (time.equals("09:00AM ")) {
-			System.out.println("Track " + countTracks + ":");
-			System.out.println(session.toString());
-			continue;
-		}
+
 		System.out.println(session.toString());
 		}
 
