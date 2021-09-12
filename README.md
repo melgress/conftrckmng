@@ -34,7 +34,7 @@ Ruby on Rails Legacy App Maintenance 60min
 A World Without HackerNews 30min  
 User Interface CSS in Rails Apps 30min  
   
-Augabe: 
+Augabe:  
 Track 1:  
 09.00 AM Writing Fast Tests Against Enterprise Rails 60min  
 10.00 AM Communicating Over Distance 60min  
