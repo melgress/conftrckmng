@@ -39,7 +39,7 @@ Track 1:
 09.00 AM Writing Fast Tests Against Enterprise Rails 60min  
 10.00 AM Communicating Over Distance 60min  
 11.00 AM Rails Magic 60min  
-12.00 PM lunch 60min  
+12.00 PM Lunch 60min  
 01.00 PM Ruby on Rails: Why We Should Move On 60min  
 02.00 PM Ruby on Rails Legacy App Maintenance 60min  
 03.00 PM Overdoing it in Python 45min  
@@ -51,7 +51,7 @@ Track 2:
 09.45 AM Accounting-Driven Development 45min  
 10.30 AM Pair Programming vs Noise 45min  
 11.15 AM Clojure Ate Scala (on my project) 45min  
-12.00 PM lunch 60min  
+12.00 PM Lunch 60min  
 12.30 PM Lua for the Masses 30min  
 01.00 PM Woah 30min  
 01.30 PM Sit Down and Write 30min  
