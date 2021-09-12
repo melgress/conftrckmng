@@ -30,6 +30,8 @@ public class Session {
 		return startTime + talks;
 	}
 	
+
+	
 	public Talks getTalk() {
 		//	System.out.println("Name :" + name );
 		      return talks;
