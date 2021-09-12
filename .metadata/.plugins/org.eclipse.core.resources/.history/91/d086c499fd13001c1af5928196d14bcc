@@ -197,10 +197,8 @@ public class ConferencePlanner {
 				 session.setTalks(NEtalk);
 				 session.setStartTime(startNE);
 				System.out.println(session.toString());
-				if (iter.hasNext()) {
-					System.out.println("");
-					System.out.println("Track " + countTracks + ":");
-					}
+				System.out.println("");
+				System.out.println("Track " + countTracks + ":");
 				countTracks++;
 				Tracks track = new Tracks (session);
 				lastTime = 9;

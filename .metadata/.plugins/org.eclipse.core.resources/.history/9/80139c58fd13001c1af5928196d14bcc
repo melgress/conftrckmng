@@ -197,10 +197,7 @@ public class ConferencePlanner {
 				 session.setTalks(NEtalk);
 				 session.setStartTime(startNE);
 				System.out.println(session.toString());
-				if (iter.hasNext()) {
-					System.out.println("");
-					System.out.println("Track " + countTracks + ":");
-					}
+				System.out.println("");
 				countTracks++;
 				Tracks track = new Tracks (session);
 				lastTime = 9;
@@ -264,10 +261,9 @@ public class ConferencePlanner {
 				 session.setStartTime(startNE);
 				 countTracks++;
 				System.out.println(session.toString());
-				if (iter.hasNext()) {
 				System.out.println("");
+
 				System.out.println("Track " + countTracks + ":");
-				}
 				Tracks track = new Tracks (session);
 				lastTime = 9;
 				setIsLunch(false);
